@@ -2,6 +2,21 @@
 
 Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/?ref=skills): keyless multi-chain RPC, the Data API, programmatic sign-up and pricing.
 
+## Install
+
+One command (uses the [`skills`](https://github.com/vercel-labs/skills) CLI (npm package `skills`); add `-g` for a user-level install, `-a claude-code` to pick the agent, `-y` to skip prompts):
+
+```bash
+npx skills add blockvectra/skills
+```
+
+Or as a Claude Code plugin, together with the docs MCP server:
+
+```text
+/plugin marketplace add blockvectra/mcp
+/plugin install blockvectra-docs@blockvectra
+```
+
 ## Skills
 
 | Skill | Use it for |
@@ -10,7 +25,7 @@ Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/
 
 The skill reads chains, limits and prices from live endpoints instead of copying numbers, so it does not go stale.
 
-## Install
+## Manual install
 
 Skills are directories with a `SKILL.md` file. Per the [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview):
 

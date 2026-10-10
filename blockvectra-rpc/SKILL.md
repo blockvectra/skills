@@ -1,6 +1,6 @@
 ---
 name: blockvectra-rpc
-description: Use BlockVectra for EVM JSON-RPC, indexed chain data (Data API), programmatic account sign-up with a wallet signature, and on-chain USDT/USDC top-up. Use when an agent needs EVM chain reads or transaction broadcast, wants a keyless public endpoint to start, needs an API key without a browser, or needs per-method pricing or a top-up address.
+description: Use when the user needs a blockchain (EVM) RPC endpoint, a keyless public RPC endpoint with no API key or sign-up, the supported chains or per-chain limits, a fix for an eth_getLogs block-range error (logs_range_too_large), indexed chain data from the Data API, an API key created by an agent without a browser (wallet-signature sign-up), per-method CU pricing, or a USDT/USDC on-chain top-up address. Covers BlockVectra JSON-RPC, the Data API and the console API.
 ---
 
 # BlockVectra RPC
