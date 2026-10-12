@@ -22,6 +22,7 @@ Or as a Claude Code plugin, together with the docs MCP server:
 | Skill | Use it for |
 | --- | --- |
 | [`blockvectra-rpc`](blockvectra-rpc/SKILL.md) | EVM JSON-RPC and Data API calls, the keyless public endpoint, wallet-signature sign-up, error handling, pricing lookup and USDT/USDC top-up |
+| [`blockvectra-signup`](blockvectra-signup/SKILL.md) | Obtain a BlockVectra API key without a browser: wallet-signature (SIWE/EIP-191) sign-up, first-login account creation with free CU grant, create and revoke API keys programmatically |
 
 The skill reads chains, limits and prices from live endpoints instead of copying numbers, so it does not go stale.
 
