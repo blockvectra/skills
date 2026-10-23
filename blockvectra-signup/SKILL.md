@@ -22,6 +22,30 @@ https://console-api.blockvectra.com/v1
 
 Do **not** include an `Origin` header in any of these requests. `curl` and standard HTTP clients omit it by default; do not add it manually. If an `Origin` header is sent and is not a configured web console domain, the challenge request returns HTTP 400 `invalid_request`.
 
+## Default workflow for Agents and CI
+
+Use the bundled [signup.mjs](signup.mjs) helper to keep credentials out of tool transcripts and CI logs. The numbered protocol walkthrough and key-management curl snippets below are reference material, not a runnable shell recipe; do not execute those credential-bearing or credential-returning examples in a logged tool.
+
+Use Node.js 22+ and make the dedicated test wallet's PRIVATE_KEY available through your existing private process environment. Do not put its value in a command or chat. From the directory containing signup.mjs, install its dependency:
+
+```bash
+npm install --no-save --package-lock=false viem
+```
+
+Choose a new absolute output path inside an existing directory owned by you with mode 0700. The helper creates the file with mode 0600 and refuses to overwrite any existing path.
+
+```bash
+BLOCKVECTRA_API_KEY_FILE=/absolute/private/directory/new-api-key node signup.mjs
+```
+
+A first wallet login can create a real account; a successful helper run creates a new API key. On success, import the file's credential into your secret manager without printing it into Agent or CI logs.
+
+If the helper fails before requesting a key, it removes its reserved empty file. After the key request starts, it preserves the file, which may be empty, partial, or complete. A nonzero exit does not prove that no key was created. Do not delete the file or blindly rerun. Privately inspect the account's key list using an existing session or sign in with the same wallet through a non-logging Console API client or the web Console, then revoke an unwanted key if appropriate. The helper does not retain the session token.
+
+## Protocol reference
+
+Below, MSG means the exact challenge message, SIG its EIP-191 signature, and TOKEN the login response's session.token. These are placeholders for privately captured fields; the illustrative snippets do not assign them.
+
 ---
 
 ## Step 1 — Request a challenge
@@ -71,6 +95,8 @@ Any modification to the message results in HTTP 400 `siwe_invalid` with `reason:
 
 ## Step 3 — Log in (first login creates the account)
 
+Reference only: this curl prints the session response. Use the helper above in Agents and CI.
+
 ```bash
 MSG="$MSG" SIG="$SIG" node -e 'process.stdout.write(JSON.stringify({ message: process.env.MSG, signature: process.env.SIG }))' | curl -s "$BASE/auth/siwe/login" \
   -H 'Content-Type: application/json' \
@@ -103,6 +129,8 @@ When `account_created: true` in the response, the account has just been created 
 
 ## Step 4 — Create an API key
 
+Reference only: this curl prints the one-time API key. Use the helper above in Agents and CI.
+
 ```bash
 curl -s "$BASE/keys" \
   -H "Authorization: Bearer $TOKEN" \
@@ -133,17 +161,6 @@ curl -s "https://api.blockvectra.com/v1/<chain>" \
   -d '{"jsonrpc":"2.0","id":1,"method":"eth_blockNumber","params":[]}'
 ```
 
-## Using the helper
-
-The helper needs Node.js 22+ and `viem`. It reads `PRIVATE_KEY` from your existing private environment, so do not put the key in the command. Choose a dedicated local directory with `0700` permissions and an absolute API key file path that does not exist yet; the helper creates that file with `0600` and never overwrites an existing path.
-
-```bash
-BLOCKVECTRA_API_KEY_FILE=/absolute/path/to/new/blockvectra-api-key node signup.mjs
-```
-
-This script creates a real BlockVectra account and a new API key. Run it only for an authorized sign-up. On success, read the credential from the file into your secret manager; never cat it into Agent or CI logs.
-
----
 
 ## Key management
 
