@@ -133,6 +133,16 @@ curl -s "https://api.blockvectra.com/v1/<chain>" \
   -d '{"jsonrpc":"2.0","id":1,"method":"eth_blockNumber","params":[]}'
 ```
 
+## Using the helper
+
+The helper needs Node.js 22+ and `viem`. It reads `PRIVATE_KEY` from your existing private environment, so do not put the key in the command. Choose a dedicated local directory with `0700` permissions and an absolute API key file path that does not exist yet; the helper creates that file with `0600` and never overwrites an existing path.
+
+```bash
+BLOCKVECTRA_API_KEY_FILE=/absolute/path/to/new/blockvectra-api-key node signup.mjs
+```
+
+This script creates a real BlockVectra account and a new API key. Run it only for an authorized sign-up. On success, read the credential from the file into your secret manager; never cat it into Agent or CI logs.
+
 ---
 
 ## Key management
