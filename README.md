@@ -1,6 +1,8 @@
 # BlockVectra skills
 
-Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/?ref=skills): keyless multi-chain RPC, the Data API, programmatic sign-up and pricing.
+Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/?ref=skills): multi-chain EVM RPC, the Data API, programmatic sign-up and pricing.
+
+Keyless RPC availability, methods and limits follow each chain's `public` policy in [`GET /v1/chains`](https://api.blockvectra.com/v1/chains). The Data API requires an API key.
 
 ## Install
 
@@ -21,7 +23,7 @@ Or as a Claude Code plugin, together with the docs MCP server:
 
 | Skill | Use it for |
 | --- | --- |
-| [`blockvectra-rpc`](blockvectra-rpc/SKILL.md) | EVM JSON-RPC and Data API calls, the keyless public endpoint, wallet-signature sign-up, error handling, pricing lookup and USDT/USDC top-up |
+| [`blockvectra-rpc`](blockvectra-rpc/SKILL.md) | EVM JSON-RPC and Data API calls, per-chain public access and limits, wallet-signature sign-up, error handling, pricing lookup and USDT/USDC top-up |
 | [`blockvectra-signup`](blockvectra-signup/SKILL.md) | Obtain a BlockVectra API key without a browser: wallet-signature (SIWE/EIP-191) sign-up, first-login account creation with free CU grant, create and revoke API keys programmatically |
 
 The skill reads chains, limits and prices from live endpoints instead of copying numbers, so it does not go stale.
