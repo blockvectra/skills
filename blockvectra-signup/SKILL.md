@@ -5,7 +5,7 @@ description: Use when an agent needs to obtain a BlockVectra API key without a b
 
 # BlockVectra Programmatic Sign-up (Wallet Signature / SIWE)
 
-An agent gets a BlockVectra API key without a browser in four HTTP calls:
+An agent gets a BlockVectra API key without a browser in four steps: three HTTP requests and one local signature.
 
 1. **Request challenge** — `POST /auth/siwe/challenge`
 2. **Sign message** — EIP-191 `personal_sign` (EIP-4361 / SIWE)
@@ -68,10 +68,12 @@ Any modification to the message results in HTTP 400 `siwe_invalid` with `reason:
 ## Step 3 — Log in (first login creates the account)
 
 ```bash
-curl -s "$BASE/auth/siwe/login" \
+MSG="$MSG" SIG="$SIG" node -e 'process.stdout.write(JSON.stringify({ message: process.env.MSG, signature: process.env.SIG }))' | curl -s "$BASE/auth/siwe/login" \
   -H 'Content-Type: application/json' \
-  -d "{\"message\":\"$MSG\",\"signature\":\"$SIG\"}"
+  --data-binary @-
 ```
+
+Node.js preserves the multiline SIWE message and signature exactly when encoding them as JSON.
 
 Required fields:
 
