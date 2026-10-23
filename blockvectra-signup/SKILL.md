@@ -49,8 +49,12 @@ Contract wallets (EIP-1271) and smart accounts are **not** supported.
 
 Using Foundry `cast`:
 
+`KEYSTORE` and `PASSWORD_FILE` are paths to an already-configured encrypted test wallet and its password file; restrict the password file to owner read. Keep private key and password values out of command arguments.
+
 ```bash
-SIG=$(cast wallet sign --private-key "$PK" "$MSG")
+KEYSTORE=/path/to/encrypted-test-keystore
+PASSWORD_FILE=/path/to/keystore-password
+SIG=$(cast wallet sign --keystore "$KEYSTORE" --password-file "$PASSWORD_FILE" "$MSG")
 ```
 
 Using `viem` (TypeScript):
