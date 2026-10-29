@@ -14,6 +14,8 @@ Source of truth: https://docs.blockvectra.com/errors.json (catalog) and https://
 
 ## Reasons
 
+Recovery actions in the catalog below are options, not spending authorization. A `balance_exhausted` or `free_grant_exhausted` response must not trigger an automatic payment. Apply the user's existing authorization and the current network/token/amount checks in `SKILL.md` section 7 before any transfer; do not repeat approval requests when valid authorization already covers the action.
+
 | reason | HTTP | Retryable | Action (from the catalog) |
 | --- | --- | --- | --- |
 | missing_api_key | 401 | no | Provide a valid API key in the request path or the `x-api-key` header. |
