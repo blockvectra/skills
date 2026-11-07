@@ -1,6 +1,6 @@
 # BlockVectra skills
 
-Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/?ref=skills): multi-chain EVM RPC, the Data API, programmatic sign-up and pricing.
+Agent Skills for [BlockVectra](https://docs.blockvectra.com/en/guides/ai-agents/?ref=skills): documentation search, multi-chain EVM RPC, the Data API, programmatic sign-up and pricing.
 
 Keyless RPC availability, methods and limits follow each chain's `public` policy in [`GET /v1/chains`](https://api.blockvectra.com/v1/chains). The Data API requires an API key.
 
@@ -35,10 +35,11 @@ Or as a Claude Code plugin, together with the docs MCP server:
 
 | Skill | Use it for |
 | --- | --- |
+| [`blockvectra-docs`](blockvectra-docs/SKILL.md) | Search and read documentation through the hosted docs-only MCP endpoint; no BlockVectra account or API key |
 | [`blockvectra-rpc`](blockvectra-rpc/SKILL.md) | EVM JSON-RPC and Data API calls, per-chain public access and limits, wallet-signature sign-up, error handling, pricing lookup and USDT/USDC top-up |
 | [`blockvectra-signup`](blockvectra-signup/SKILL.md) | Obtain a BlockVectra API key without a browser: wallet-signature (SIWE/EIP-191) sign-up, first-login account creation with free CU grant, create and revoke API keys programmatically |
 
-The skill reads chains, limits and prices from live endpoints instead of copying numbers, so it does not go stale.
+For live API tasks, the RPC skill reads chains, limits and prices from live endpoints instead of copying numbers.
 
 ## Manual install
 
@@ -59,9 +60,21 @@ Other agents that read `SKILL.md` directories can use the same folder; check tha
 
 ## Docs MCP server
 
+For documentation search and reading, connect the **docs-only** endpoint. It exposes `search_docs` and `read_doc`, with no BlockVectra account, API key, or local bridge:
+
+```bash
+claude mcp add --transport http blockvectra-docs-only https://docs.blockvectra.com/mcp/docs
+```
+
+Installing a skill does not add an MCP connection automatically. After connecting, ask the client to search for a task and read a matching page. See the [docs skill](blockvectra-docs/SKILL.md) for the workflow.
+
+For the broader documentation, API discovery, and estimation tools, the existing **full-server** connection remains available:
+
 ```bash
 claude mcp add --transport http blockvectra-docs https://docs.blockvectra.com/mcp
 ```
+
+The plugin installation above configures the full server. Both connections can coexist under these distinct names.
 
 ## License
 
