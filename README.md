@@ -18,13 +18,28 @@ No dependency installation, wallet, account or API key is needed. It checks the 
 
 ## Install
 
-One command (uses the [`skills`](https://github.com/vercel-labs/skills) CLI (npm package `skills`); add `-g` for a user-level install, `-a claude-code` to pick the agent, `-y` to skip prompts):
+For documentation questions, install only the documentation skill:
+
+```bash
+npx skills add blockvectra/skills --skill blockvectra-docs
+```
+
+Then add the [docs-only MCP connection](#docs-mcp-server); installing the skill does not configure a server.
+
+In Claude Code, you can also connect the two documentation tools with the docs-only MCP plugin:
+
+```text
+/plugin marketplace add blockvectra/mcp
+/plugin install blockvectra-docs-only@blockvectra
+```
+
+To install all three skills, use the [`skills`](https://github.com/vercel-labs/skills) CLI (add `-g` for a user-level install, `-a claude-code` to pick the agent, `-y` to skip prompts):
 
 ```bash
 npx skills add blockvectra/skills
 ```
 
-Or as a Claude Code plugin, together with the docs MCP server:
+For the RPC skill together with the full MCP server, use the separate Claude Code plugin:
 
 ```text
 /plugin marketplace add blockvectra/mcp
@@ -74,7 +89,7 @@ For the broader documentation, API discovery, and estimation tools, the existing
 claude mcp add --transport http blockvectra-docs https://docs.blockvectra.com/mcp
 ```
 
-The plugin installation above configures the full server. Both connections can coexist under these distinct names.
+The `blockvectra-docs@blockvectra` plugin configures the full server; `blockvectra-docs-only@blockvectra` configures the docs-only server. Both connections can coexist under these distinct names.
 
 ## License
 
